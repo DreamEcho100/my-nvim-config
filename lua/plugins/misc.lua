@@ -33,12 +33,23 @@ return {
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
+    signs = true, -- Enable icons for TODO, FIXME, etc.
+    keywords = {
+      TODO = { icon = ' ', color = 'info' },
+      FIXME = { icon = ' ', color = 'error' },
+    },
   },
   {
     -- High-performance color highlighter
     'norcalli/nvim-colorizer.lua',
     config = function()
       require('colorizer').setup()
+    end,
+  },
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
     end,
   },
 }

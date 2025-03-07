@@ -12,24 +12,51 @@ return {
     -- Formatters & linters for mason to install
     require('mason-null-ls').setup {
       ensure_installed = {
-        'prettier', -- ts/js formatter
+        'prettier',
+        'prettierd', -- ts/js formatter
+        'biome', -- Alternative JS/TS formatter
         'stylua', -- lua formatter
         'eslint_d', -- ts/js linter
         'shfmt', -- Shell formatter
         'checkmake', -- linter for Makefiles
         'ruff', -- Python linter and formatter
+        'black', -- Python formatter
+        'clang-format', -- C/C++ formatter
+        'cpplint', -- C/C++ linter
       },
       automatic_installation = true,
     }
 
     local sources = {
-      diagnostics.checkmake,
+      -- C/C++
+      formatting.clang_format,
+      -- diagnostics.cpplint,
+      require 'none-ls.diagnostics.cpplint',
+
+      -- JavaScript, TypeScript, HTML, CSS
       formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
+      formatting.prettierd,
+      formatting.biome,
+      -- diagnostics.eslint_d,
+      require 'none-ls.diagnostics.eslint_d',
+
+      -- Lua
       formatting.stylua,
+
+      -- Shell
       formatting.shfmt.with { args = { '-i', '4' } },
-      formatting.terraform_fmt,
+
+      -- Python
       require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
       require 'none-ls.formatting.ruff_format',
+      formatting.black,
+
+      -- Makefiles
+      diagnostics.checkmake,
+
+      -- Terraforme
+      formatting.terraform_fmt,
+      require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
     }
 
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})

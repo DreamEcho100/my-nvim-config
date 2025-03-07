@@ -6,6 +6,16 @@
 
 `gd` go to definition.
 `shift+K` reveal the documentation of the symbol under the cursor.
+to rename symbol under the cursor, type `:LspRename`.
+`<leader>rn` to rename symbol under the cursor.
+`<leader>ca` to code action.
+`gd` to go to definition.
+`gr` to go to references.
+`gi` to go to implementation.
+
+## 'neotree'
+
+`<leader>cf` to format the code.
 
 ## 'plugins/telescope'
 
