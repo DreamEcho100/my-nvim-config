@@ -1,5 +1,7 @@
 # Neovim plugins important keybindings and features
 
+https://chatgpt.com/c/67cb38db-c660-8013-945a-c52ed9683074
+
 - [Full Neovim Setup from Scratch in 2025](https://www.youtube.com/watch?v=KYDG3AHgYEs)
 
 ## 'plugins/lsp'

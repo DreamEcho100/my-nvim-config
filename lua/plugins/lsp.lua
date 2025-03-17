@@ -60,6 +60,7 @@ return {
           clangd = {
             semanticHighlighting = true, -- Enable semantic highlighting
             inlayHints = { enable = true }, -- Enable inlay hints
+            offsetEncoding = 'utf-16',
           },
         },
       },
