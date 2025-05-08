@@ -33,12 +33,6 @@ return { -- Autocompletion
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
-    'hrsh7th/cmp-cmdline',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    'hrsh7th/cmp-nvim-lua', -- Neovim API completion
-
-    -- Improves sorting
-    'lukas-reineke/cmp-under-comparator',
   },
   config = function()
     -- See `:help cmp`
@@ -159,11 +153,9 @@ return { -- Autocompletion
           group_index = 0,
         },
         { name = 'nvim_lsp' },
-        { name = 'nvim_lsp_signature_help' },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
-        { name = 'nvim_lua' }, -- For Neovim Lua API
       },
       formatting = {
         fields = { 'kind', 'abbr', 'menu' },
@@ -174,31 +166,10 @@ return { -- Autocompletion
             luasnip = '[Snippet]',
             buffer = '[Buffer]',
             path = '[Path]',
-            cmdline = '[Cmd]',
-            nvim_lua = '[Lua]',
           })[entry.source.name]
           return vim_item
         end,
       },
-      sorting = {
-        comparators = {
-          require('cmp-under-comparator').under,
-          cmp.config.compare.exact,
-          cmp.config.compare.kind,
-          cmp.config.compare.length,
-          cmp.config.compare.offset,
-          cmp.config.compare.order,
-        },
-      },
     }
-
-    -- Command-line completion (for `:` commands)
-    cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources {
-        { name = 'cmdline' },
-        { name = 'path' },
-      },
-    })
   end,
 }

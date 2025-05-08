@@ -46,10 +46,54 @@ return {
       require('colorizer').setup()
     end,
   },
-  {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end,
-  },
+  -- {
+  --   'numToStr/Comment.nvim',
+  --   config = function()
+  --     require('Comment').setup()
+  --   end,
+  -- },
+  -- {
+  --   -- Git signs in the gutter
+  --   'lewis6991/gitsigns.nvim',
+  --   config = function()
+  --     require('gitsigns').setup()
+  --   end,
+  -- },
+  -- {
+  --   -- Markdown preview
+  --   'iamcco/markdown-preview.nvim',
+  --   build = 'cd app && npm install',
+  -- },
+  -- {
+  --   -- Markdown preview for Neovim
+  --   'ellisonleao/glow.nvim',
+  --   config = function()
+  --     require('glow').setup()
+  --   end,
+  -- },
+  -- {
+  --   -- Vim wiki
+  --   'vimwiki/vimwiki',
+  --   config = function()
+  --     vim.g.vimwiki_list = {
+  --       {
+  --         path = '~/vimwiki/',
+  --         syntax = 'markdown',
+  --         ext = '.md',
+  --       },
+  --     }
+  --   end,
+  -- },
+  -- {
+  --   -- Snippets
+  --   'L3MON4D3/LuaSnip',
+  -- },
+  -- {
+  --   -- Snippet engine for Neovim
+  --   'saadparwaiz1/cmp_luasnip',
+  -- },
+  -- {
+  --   -- Snippet engine for Neovim
+  --   'hrsh7th/vim-vsnip',
+  -- },
 }

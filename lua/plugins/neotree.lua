@@ -3,11 +3,11 @@ return {
   branch = 'v3.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
-    -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+    '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
     {
-      's1n7ax/nvim-window-picker', -- for open_with_window_picker keymaps
+      's1n7ax/nvim-window-picker',
       version = '2.*',
       config = function()
         require('window-picker').setup {
@@ -28,44 +28,33 @@ return {
   },
   config = function()
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-    vim.fn.sign_define('DiagnosticSignError', {
-      text = ' ',
-      texthl = 'DiagnosticSignError',
-    })
-    vim.fn.sign_define('DiagnosticSignWarn', {
-      text = ' ',
-      texthl = 'DiagnosticSignWarn',
-    })
-    vim.fn.sign_define('DiagnosticSignInfo', {
-      text = ' ',
-      texthl = 'DiagnosticSignInfo',
-    })
-    vim.fn.sign_define('DiagnosticSignHint', {
-      text = '󰌵',
-      texthl = 'DiagnosticSignHint',
-    })
-
-    require('nvim-web-devicons').setup {
-      override = {
-        c = { icon = '', color = '#599eff', name = 'C' },
-        cpp = { icon = '', color = '#f34b7d', name = 'Cpp' },
-        lua = { icon = '', color = '#51a0cf', name = 'Lua' },
-        python = { icon = '', color = '#3572A5', name = 'Python' },
-        javascript = { icon = '', color = '#f7df1e', name = 'JavaScript' },
-        typescript = { icon = '', color = '#2b7489', name = 'TypeScript' },
-        html = { icon = '', color = '#e44d26', name = 'HTML' },
-        css = { icon = '', color = '#563d7c', name = 'CSS' },
-      },
-      default = true,
-    }
+    vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
+    vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
+    vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
+    vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
+    
+    -- require('nvim-web-devicons').setup {
+    --   override = {
+    --     c = { icon = '', color = '#599eff', name = 'C' },
+    --     cpp = { icon = '', color = '#f34b7d', name = 'Cpp' },
+    --     lua = { icon = '', color = '#51a0cf', name = 'Lua' },
+    --     python = { icon = '', color = '#3572A5', name = 'Python' },
+    --     javascript = { icon = '', color = '#f7df1e', name = 'JavaScript' },
+    --     typescript = { icon = '', color = '#2b7489', name = 'TypeScript' },
+    --     html = { icon = '', color = '#e44d26', name = 'HTML' },
+    --     css = { icon = '', color = '#563d7c', name = 'CSS' },
+    --   },
+    --   default = true,
+    -- }
 
     require('neo-tree').setup {
       close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = 'rounded',
       enable_git_status = true,
       enable_diagnostics = true,
+      -- enable_normal_mode_for_inputs = false,                             -- Enable normal mode for input dialogs.
       open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' }, -- when opening files, do not use windows containing these filetypes or buftypes
-      open_files_using_relative_paths = false,
+        open_files_using_relative_paths = false,
       sort_case_insensitive = false, -- used when sorting files and directories in the tree
       sort_function = nil, -- use a custom function for sorting files and directories in the tree
       -- sort_function = function (a,b)
@@ -97,17 +86,17 @@ return {
           folder_closed = '',
           folder_open = '',
           folder_empty = '󰜌',
-          provider = function(icon, node, state) -- default icon provider utilizes nvim-web-devicons if available
-            if node.type == 'file' or node.type == 'terminal' then
-              local success, web_devicons = pcall(require, 'nvim-web-devicons')
-              local name = node.type == 'terminal' and 'terminal' or node.name
-              if success then
-                local devicon, hl = web_devicons.get_icon(name)
-                icon.text = devicon or icon.text
-                icon.highlight = hl or icon.highlight
-              end
-            end
-          end,
+          -- provider = function(icon, node, state) -- default icon provider utilizes nvim-web-devicons if available
+          --   if node.type == 'file' or node.type == 'terminal' then
+          --     local success, web_devicons = pcall(require, 'nvim-web-devicons')
+          --     local name = node.type == 'terminal' and 'terminal' or node.name
+          --     if success then
+          --       local devicon, hl = web_devicons.get_icon(name)
+          --       icon.text = devicon or icon.text
+          --       icon.highlight = hl or icon.highlight
+          --     end
+          --   end
+          -- end,
           -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
           -- then these will never be used.
           default = '*',
@@ -181,15 +170,8 @@ return {
           ['<2-LeftMouse>'] = 'open',
           ['<cr>'] = 'open',
           ['<esc>'] = 'cancel', -- close preview or floating neo-tree window
-          ['P'] = {
-            'toggle_preview',
-            config = {
-              use_float = true,
-              use_image_nvim = true,
-            },
-          },
-          -- Read `# Preview Mode` for more information
-          ['l'] = 'focus_preview',
+          ['P'] = { 'toggle_preview', config = { use_float = true, use_image_nvim = true, } },
+          ['l'] = 'open', -- focus_preview
           ['S'] = 'open_split',
           ['s'] = 'open_vsplit',
           -- ["S"] = "split_with_window_picker",
@@ -198,11 +180,11 @@ return {
           -- ["<cr>"] = "open_drop",
           -- ["t"] = "open_tab_drop",
           ['w'] = 'open_with_window_picker',
-          -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
+          --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
           ['C'] = 'close_node',
           -- ['C'] = 'close_all_subnodes',
           ['z'] = 'close_all_nodes',
-          -- ["Z"] = "expand_all_nodes",
+          --["Z"] = "expand_all_nodes",
           ['a'] = {
             'add',
             -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
@@ -214,7 +196,6 @@ return {
           ['A'] = 'add_directory', -- also accepts the optional config.show_path option like "add". this also supports BASH style brace expansion.
           ['d'] = 'delete',
           ['r'] = 'rename',
-          ['b'] = 'rename_basename',
           ['y'] = 'copy_to_clipboard',
           ['x'] = 'cut_to_clipboard',
           ['p'] = 'paste_from_clipboard',
@@ -224,7 +205,7 @@ return {
           --  config = {
           --    show_path = "none" -- "none", "relative", "absolute"
           --  }
-          -- }
+          --}
           ['m'] = 'move', -- takes text input for destination, also accepts the optional config.show_path option like "add".
           ['q'] = 'close_window',
           ['R'] = 'refresh',
@@ -232,44 +213,38 @@ return {
           ['<'] = 'prev_source',
           ['>'] = 'next_source',
           ['i'] = 'show_file_details',
-          -- ["i"] = {
-          --   "show_file_details",
-          --   -- format strings of the timestamps shown for date created and last modified (see `:h os.date()`)
-          --   -- both options accept a string or a function that takes in the date in seconds and returns a string to display
-          --   -- config = {
-          --   --   created_format = "%Y-%m-%d %I:%M %p",
-          --   --   modified_format = "relative", -- equivalent to the line below
-          --   --   modified_format = function(seconds) return require('neo-tree.utils').relative_date(seconds) end
-          --   -- }
-          -- },
         },
       },
       nesting_rules = {},
       filesystem = {
         filtered_items = {
           visible = false, -- when true, they will just be displayed differently than normal items
-          hide_dotfiles = true,
-          hide_gitignored = true,
-          hide_hidden = true, -- only works on Windows for hidden files/directories
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          hide_hidden = false, -- only works on Windows for hidden files/directories
           hide_by_name = {
-            -- "node_modules"
+            '.DS_Store',
+            'thumbs.db',
+            'node_modules',
+            '__pycache__',
+            '.virtual_documents',
+            '.git',
+            '.python-version',
+            '.venv',
           },
           hide_by_pattern = { -- uses glob style patterns
-            -- "*.meta",
-            -- "*/src/*/tsconfig.json",
+            --"*.meta",
+            --"*/src/*/tsconfig.json",
           },
           always_show = { -- remains visible even if other settings would normally hide it
-            -- ".gitignored",
-          },
-          always_show_by_pattern = { -- uses glob style patterns
-            -- ".env*",
+            --".gitignored",
           },
           never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-            -- ".DS_Store",
-            -- "thumbs.db"
+            --".DS_Store",
+            --"thumbs.db"
           },
           never_show_by_pattern = { -- uses glob style patterns
-            -- ".null-ls_*",
+            --".null-ls_*",
           },
         },
         follow_current_file = {
@@ -298,50 +273,21 @@ return {
             ['<c-x>'] = 'clear_filter',
             ['[g'] = 'prev_git_modified',
             [']g'] = 'next_git_modified',
-            ['o'] = {
-              'show_help',
-              nowait = false,
-              config = {
-                title = 'Order by',
-                prefix_key = 'o',
-              },
-            },
-            ['oc'] = {
-              'order_by_created',
-              nowait = false,
-            },
-            ['od'] = {
-              'order_by_diagnostics',
-              nowait = false,
-            },
-            ['og'] = {
-              'order_by_git_status',
-              nowait = false,
-            },
-            ['om'] = {
-              'order_by_modified',
-              nowait = false,
-            },
-            ['on'] = {
-              'order_by_name',
-              nowait = false,
-            },
-            ['os'] = {
-              'order_by_size',
-              nowait = false,
-            },
-            ['ot'] = {
-              'order_by_type',
-              nowait = false,
-            },
-            -- ['<key>'] = function(state) ... end,
+            ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
+            ['oc'] = { 'order_by_created', nowait = false },
+            ['od'] = { 'order_by_diagnostics', nowait = false },
+            ['og'] = { 'order_by_git_status', nowait = false },
+            ['om'] = { 'order_by_modified', nowait = false },
+            ['on'] = { 'order_by_name', nowait = false },
+            ['os'] = { 'order_by_size', nowait = false },
+            ['ot'] = { 'order_by_type', nowait = false },
           },
           fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
             ['<down>'] = 'move_cursor_down',
             ['<C-n>'] = 'move_cursor_down',
             ['<up>'] = 'move_cursor_up',
             ['<C-p>'] = 'move_cursor_up',
-            ['<esc>'] = 'close',
+            -- ['<esc>'] = 'close',
             -- ['<key>'] = function(state, scroll_padding) ... end,
           },
         },
@@ -361,38 +307,13 @@ return {
             ['bd'] = 'buffer_delete',
             ['<bs>'] = 'navigate_up',
             ['.'] = 'set_root',
-            ['o'] = {
-              'show_help',
-              nowait = false,
-              config = {
-                title = 'Order by',
-                prefix_key = 'o',
-              },
-            },
-            ['oc'] = {
-              'order_by_created',
-              nowait = false,
-            },
-            ['od'] = {
-              'order_by_diagnostics',
-              nowait = false,
-            },
-            ['om'] = {
-              'order_by_modified',
-              nowait = false,
-            },
-            ['on'] = {
-              'order_by_name',
-              nowait = false,
-            },
-            ['os'] = {
-              'order_by_size',
-              nowait = false,
-            },
-            ['ot'] = {
-              'order_by_type',
-              nowait = false,
-            },
+            ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
+            ['oc'] = { 'order_by_created', nowait = false },
+            ['od'] = { 'order_by_diagnostics', nowait = false },
+            ['om'] = { 'order_by_modified', nowait = false },
+            ['on'] = { 'order_by_name', nowait = false },
+            ['os'] = { 'order_by_size', nowait = false },
+            ['ot'] = { 'order_by_type', nowait = false },
           },
         },
       },
@@ -407,51 +328,20 @@ return {
             ['gc'] = 'git_commit',
             ['gp'] = 'git_push',
             ['gg'] = 'git_commit_and_push',
-            ['o'] = {
-              'show_help',
-              nowait = false,
-              config = {
-                title = 'Order by',
-                prefix_key = 'o',
-              },
-            },
-            ['oc'] = {
-              'order_by_created',
-              nowait = false,
-            },
-            ['od'] = {
-              'order_by_diagnostics',
-              nowait = false,
-            },
-            ['om'] = {
-              'order_by_modified',
-              nowait = false,
-            },
-            ['on'] = {
-              'order_by_name',
-              nowait = false,
-            },
-            ['os'] = {
-              'order_by_size',
-              nowait = false,
-            },
-            ['ot'] = {
-              'order_by_type',
-              nowait = false,
-            },
+            ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
+            ['oc'] = { 'order_by_created', nowait = false },
+            ['od'] = { 'order_by_diagnostics', nowait = false },
+            ['om'] = { 'order_by_modified', nowait = false },
+            ['on'] = { 'order_by_name', nowait = false },
+            ['os'] = { 'order_by_size', nowait = false },
+            ['ot'] = { 'order_by_type', nowait = false },
           },
         },
       },
     }
 
     vim.cmd [[nnoremap \ :Neotree reveal<cr>]]
-    vim.keymap.set('n', '<leader>e', ':Neotree toggle position=left<CR>', {
-      noremap = true,
-      silent = true,
-    }) -- focus file explorer
-    vim.keymap.set('n', '<leader>ngs', ':Neotree float git_status<CR>', {
-      noremap = true,
-      silent = true,
-    }) -- open git status window
+    vim.keymap.set('n', '<leader>e', ':Neotree toggle position=left<CR>', { noremap = true, silent = true }) -- focus file explorer
+    vim.keymap.set('n', '<leader>ngs', ':Neotree float git_status<CR>', { noremap = true, silent = true }) -- open git status window
   end,
 }

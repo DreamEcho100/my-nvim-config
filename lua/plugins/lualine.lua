@@ -23,12 +23,7 @@ return {
       'diagnostics',
       sources = { 'nvim_diagnostic' },
       sections = { 'error', 'warn' },
-      symbols = {
-        error = ' ',
-        warn = ' ',
-        info = ' ',
-        hint = ' ',
-      },
+      symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
       colored = false,
       update_in_insert = false,
       always_visible = false,
@@ -38,11 +33,7 @@ return {
     local diff = {
       'diff',
       colored = false,
-      symbols = {
-        added = ' ',
-        modified = ' ',
-        removed = ' ',
-      }, -- changes diff symbols
+      symbols = { added = ' ', modified = ' ', removed = ' ' }, -- changes diff symbols
       cond = hide_in_width,
     }
 
@@ -62,6 +53,7 @@ return {
       return vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] and '' or ''
     end
 
+
     require('lualine').setup {
       options = {
         icons_enabled = true,
@@ -69,14 +61,8 @@ return {
         -- Some useful glyphs:
         -- https://www.nerdfonts.com/cheat-sheet
         --        
-        section_separators = {
-          left = '',
-          right = '',
-        },
-        component_separators = {
-          left = '',
-          right = '',
-        },
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
         disabled_filetypes = { 'alpha', 'neo-tree' },
         always_divide_middle = true,
       },
@@ -84,34 +70,15 @@ return {
         lualine_a = { mode },
         lualine_b = { 'branch' },
         lualine_c = { filename },
-        lualine_x = {
-          diagnostics,
-          diff,
-          {
-            'encoding',
-            cond = hide_in_width,
-          },
-          {
-            'filetype',
-            cond = hide_in_width,
-          },
-          lsp_status,
-          treesitter_status,
-        },
+        lualine_x = { diagnostics, diff, { 'encoding', cond = hide_in_width }, { 'filetype', cond = hide_in_width }, lsp_status, treesitter_status },
         lualine_y = { 'location' },
         lualine_z = { 'progress' },
       },
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { {
-          'filename',
-          path = 1,
-        } },
-        lualine_x = { {
-          'location',
-          padding = 0,
-        } },
+        lualine_c = { { 'filename', path = 1 } },
+        lualine_x = { { 'location', padding = 0 } },
         lualine_y = {},
         lualine_z = {},
       },
