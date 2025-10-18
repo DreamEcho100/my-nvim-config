@@ -74,10 +74,9 @@ return {
     --   end,
     -- }
     {
-      "yioneko/nvim-vtsls",
-      dependencies = { "neovim/nvim-lspconfig" },
-    }
-    
+      'yioneko/nvim-vtsls',
+      dependencies = { 'neovim/nvim-lspconfig' },
+    },
   },
   config = function()
     -- Brief aside: **What is LSP?**
@@ -274,7 +273,7 @@ return {
         settings = {
           typescript = {
             inlayHints = {
-              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHints = 'all',
               includeInlayParameterNameHintsWhenArgumentMatchesName = false,
               includeInlayFunctionParameterTypeHints = true,
               includeInlayVariableTypeHints = true,
@@ -285,7 +284,7 @@ return {
           },
           javascript = {
             inlayHints = {
-              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHints = 'all',
               includeInlayParameterNameHintsWhenArgumentMatchesName = false,
               includeInlayFunctionParameterTypeHints = true,
               includeInlayVariableTypeHints = true,
@@ -295,7 +294,7 @@ return {
             },
           },
         },
-        filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+        filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
       },
 
       ruff = {},
@@ -373,7 +372,7 @@ return {
       'stylua', -- Used to format Lua code
       'clangd', -- Ensure clangd is installed
       -- 'typescript-language-server',
-      'vtsls'
+      'vtsls',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -391,3 +390,166 @@ return {
     }
   end,
 }
+--
+-- return {
+--   'neovim/nvim-lspconfig',
+--
+--   dependencies = {
+--     -- Mason ecosystem pinned to v1-series (compatible with LSPConfig ≥0.10)
+--     { 'mason-org/mason.nvim' }, -- , version = '^1.0.0', config = true },
+--     { 'mason-org/mason-lspconfig.nvim', version = '^1.0.0' },
+--     'WhoIsSethDaniel/mason-tool-installer.nvim',
+--
+--     -- Status UI for LSP progress
+--     { 'j-hui/fidget.nvim', opts = {} },
+--
+--     -- Completion capabilities
+--     'hrsh7th/cmp-nvim-lsp',
+--
+--     -- TypeScript LSP powered by vtsls
+--     { 'yioneko/nvim-vtsls', dependencies = { 'neovim/nvim-lspconfig' } },
+--   },
+--
+--   config = function()
+--     -- LSP attach autocmd
+--     vim.api.nvim_create_autocmd('LspAttach', {
+--       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+--       callback = function(event)
+--         local map = function(keys, func, desc, mode)
+--           mode = mode or 'n'
+--           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+--         end
+--
+--         local telescope = require 'telescope.builtin'
+--
+--         map('gd', telescope.lsp_definitions, '[G]oto [D]efinition')
+--         map('gr', telescope.lsp_references, '[G]oto [R]eferences')
+--         map('gI', telescope.lsp_implementations, '[G]oto [I]mplementation')
+--         map('<leader>D', telescope.lsp_type_definitions, 'Type [D]efinition')
+--         map('<leader>ds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
+--         map('<leader>ws', telescope.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+--         map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+--         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+--         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+--
+--         local client = vim.lsp.get_client_by_id(event.data.client_id)
+--
+--         -- Highlight references if supported
+--         if client and client:supports_method 'textDocument/documentHighlight' then
+--           local hl_group = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+--           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+--             buffer = event.buf,
+--             group = hl_group,
+--             callback = vim.lsp.buf.document_highlight,
+--           })
+--           vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+--             buffer = event.buf,
+--             group = hl_group,
+--             callback = vim.lsp.buf.clear_references,
+--           })
+--           vim.api.nvim_create_autocmd('LspDetach', {
+--             buffer = event.buf,
+--             callback = function(ev)
+--               vim.lsp.buf.clear_references()
+--               vim.api.nvim_clear_autocmds { group = hl_group, buffer = ev.buf }
+--             end,
+--           })
+--         end
+--
+--         -- Inlay hints toggle
+--         if client and client:supports_method 'textDocument/inlayHint' then
+--           map('<leader>th', function()
+--             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+--           end, '[T]oggle Inlay [H]ints')
+--         end
+--       end,
+--     })
+--
+--     -- Capabilities with completion
+--     local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
+--
+--     local servers = {
+--       clangd = {
+--         cmd = { 'clangd', '--background-index', '--clang-tidy', '--completion-style=detailed' },
+--         settings = {
+--           clangd = { semanticHighlighting = true, inlayHints = { enable = true } },
+--         },
+--       },
+--
+--       vtsls = {
+--         filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+--         settings = {
+--           typescript = {
+--             inlayHints = {
+--               includeInlayParameterNameHints = 'all',
+--               includeInlayVariableTypeHints = true,
+--               includeInlayFunctionLikeReturnTypeHints = true,
+--             },
+--           },
+--         },
+--       },
+--
+--       ruff = {},
+--       pylsp = {
+--         settings = {
+--           pylsp = {
+--             plugins = {
+--               pyflakes = { enabled = false },
+--               pycodestyle = { enabled = false },
+--             },
+--           },
+--         },
+--       },
+--
+--       html = { filetypes = { 'html', 'twig', 'hbs' } },
+--       cssls = {},
+--       tailwindcss = {},
+--       dockerls = {},
+--       sqlls = {},
+--       terraformls = {},
+--       jsonls = {},
+--       yamlls = {},
+--
+--       lua_ls = {
+--         settings = {
+--           Lua = {
+--             runtime = { version = 'LuaJIT' },
+--             workspace = {
+--               checkThirdParty = false,
+--               library = vim.api.nvim_get_runtime_file('', true),
+--             },
+--             completion = { callSnippet = 'Replace' },
+--             diagnostics = { disable = { 'missing-fields' } },
+--             format = { enable = false },
+--           },
+--         },
+--       },
+--     }
+--
+--     -- Mason setup
+--     require('mason').setup {
+--       ui = {
+--         icons = {
+--           package_installed = '✓',
+--           package_pending = '➜',
+--           package_uninstalled = '✗',
+--         },
+--       },
+--     }
+--
+--     local ensure_installed = vim.tbl_keys(servers)
+--     vim.list_extend(ensure_installed, { 'stylua', 'clangd', 'vtsls' })
+--     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+--
+--     -- Mason-LSPConfig setup
+--     require('mason-lspconfig').setup {
+--       handlers = {
+--         function(server_name)
+--           local server = servers[server_name] or {}
+--           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+--           require('lspconfig')[server_name].setup(server)
+--         end,
+--       },
+--     }
+--   end,
+-- }
